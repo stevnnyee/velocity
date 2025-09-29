@@ -1,0 +1,5 @@
+#!/bin/bash
+source velocity-env/bin/activate
+echo "Velocity environment activated"
+echo "Python: $(which python3)"
+echo "Ready to develop"

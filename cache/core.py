@@ -28,6 +28,7 @@ class VelocityCache:
         if max_size <= 0:
             raise ValueError("max_size must be positive")
             
+        # OrderedDict is a dictionary that remembers the order of the keys
         self._cache: OrderedDict[str, Any] = OrderedDict()
         self._max_size = max_size
         self._lock = threading.RLock()

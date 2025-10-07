@@ -12,7 +12,7 @@ from cache.core import VelocityCache
 # Configure logging
 std_logging.basicConfig(
     level=std_logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
 )
 logging = std_logging.getLogger(__name__)
 
@@ -54,7 +54,7 @@ def demo_cache():
 
 def run_tests():
     """Run the test suite."""
-    logging.info("🧪 Running VelocityCache Tests...")
+    logging.info("Running VelocityCache Tests...")
     import subprocess
 
     result = subprocess.run(
@@ -72,7 +72,7 @@ def run_tests():
 
 def run_benchmarks():
     """Run performance benchmarks."""
-    logging.info("⚡ Running VelocityCache Benchmarks...")
+    logging.info("Running VelocityCache Benchmarks...")
     import subprocess
 
     result = subprocess.run(

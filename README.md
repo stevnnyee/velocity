@@ -1,4 +1,4 @@
-# VelocityCache 🚀
+# VelocityCache
 
 A high-performance, thread-safe in-memory cache with TTL support and LRU eviction.
 
@@ -115,7 +115,7 @@ velocity/
 └── README.md
 ```
 
-## Week 1 Complete ✅
+## Week 1 Complete
 
 - TTL support with lazy expiration
 - Comprehensive metrics tracking

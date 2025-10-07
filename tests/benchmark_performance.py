@@ -6,14 +6,22 @@ Run with: python -m tests.benchmark_performance
 """
 
 import time
+import logging as std_logging
 from cache.core import VelocityCache
+
+# Configure logging
+std_logging.basicConfig(
+    level=std_logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+)
+logging = std_logging.getLogger(__name__)
 
 
 def benchmark_set_operations(cache_size=10000, operations=50000):
     """Benchmark SET operations with TTL."""
     cache = VelocityCache(max_size=cache_size)
 
-    print(f"Benchmarking {operations:,} SET operations...")
+    logging.info(f"Benchmarking {operations:,} SET operations...")
     start_time = time.time()
 
     for i in range(operations):
@@ -23,7 +31,7 @@ def benchmark_set_operations(cache_size=10000, operations=50000):
     duration = end_time - start_time
     ops_per_sec = operations / duration
 
-    print(f"SET Operations: {ops_per_sec:,.0f} ops/sec ({duration:.3f}s)")
+    logging.info(f"SET Operations: {ops_per_sec:,.0f} ops/sec ({duration:.3f}s)")
     return ops_per_sec
 
 
@@ -35,7 +43,7 @@ def benchmark_get_operations(cache_size=10000, operations=50000):
     for i in range(cache_size):
         cache.set(f"key_{i}", f"value_{i}", ttl=10.0)
 
-    print(f"Benchmarking {operations:,} GET operations...")
+    logging.info(f"Benchmarking {operations:,} GET operations...")
     start_time = time.time()
 
     for i in range(operations):
@@ -45,7 +53,7 @@ def benchmark_get_operations(cache_size=10000, operations=50000):
     duration = end_time - start_time
     ops_per_sec = operations / duration
 
-    print(f"GET Operations: {ops_per_sec:,.0f} ops/sec ({duration:.3f}s)")
+    logging.info(f"GET Operations: {ops_per_sec:,.0f} ops/sec ({duration:.3f}s)")
     return ops_per_sec
 
 
@@ -57,7 +65,7 @@ def benchmark_mixed_operations(cache_size=10000, operations=50000):
     for i in range(cache_size):
         cache.set(f"key_{i}", f"value_{i}", ttl=10.0)
 
-    print(f"Benchmarking {operations:,} mixed operations (80% GET, 20% SET)...")
+    logging.info(f"Benchmarking {operations:,} mixed operations (80% GET, 20% SET)...")
     start_time = time.time()
 
     for i in range(operations):
@@ -70,7 +78,7 @@ def benchmark_mixed_operations(cache_size=10000, operations=50000):
     duration = end_time - start_time
     ops_per_sec = operations / duration
 
-    print(f"Mixed Operations: {ops_per_sec:,.0f} ops/sec ({duration:.3f}s)")
+    logging.info(f"Mixed Operations: {ops_per_sec:,.0f} ops/sec ({duration:.3f}s)")
     return ops_per_sec
 
 
@@ -78,7 +86,7 @@ def benchmark_ttl_expiration(cache_size=1000, operations=10000):
     """Benchmark TTL expiration handling."""
     cache = VelocityCache(max_size=cache_size)
 
-    print(f"Benchmarking {operations:,} operations with TTL expiration...")
+    logging.info(f"Benchmarking {operations:,} operations with TTL expiration...")
     start_time = time.time()
 
     for i in range(operations):
@@ -92,47 +100,47 @@ def benchmark_ttl_expiration(cache_size=1000, operations=10000):
     duration = end_time - start_time
     ops_per_sec = operations / duration
 
-    print(f"TTL Operations: {ops_per_sec:,.0f} ops/sec ({duration:.3f}s)")
+    logging.info(f"TTL Operations: {ops_per_sec:,.0f} ops/sec ({duration:.3f}s)")
 
     # Print stats
     stats = cache.stats()
-    print(f"Stats: {stats}")
+    logging.info(f"Stats: {stats}")
     return ops_per_sec
 
 
 def run_all_benchmarks():
     """Run all benchmark tests."""
-    print("=" * 60)
-    print("VelocityCache TTL Performance Benchmarks")
-    print("=" * 60)
+    logging.info("=" * 60)
+    logging.info("VelocityCache TTL Performance Benchmarks")
+    logging.info("=" * 60)
 
     results = {}
 
     # Run benchmarks
     results["set"] = benchmark_set_operations()
-    print()
+    logging.info("")
 
     results["get"] = benchmark_get_operations()
-    print()
+    logging.info("")
 
     results["mixed"] = benchmark_mixed_operations()
-    print()
+    logging.info("")
 
     results["ttl"] = benchmark_ttl_expiration()
-    print()
+    logging.info("")
 
     # Summary
-    print("=" * 60)
-    print("SUMMARY")
-    print("=" * 60)
+    logging.info("=" * 60)
+    logging.info("SUMMARY")
+    logging.info("=" * 60)
 
     for test_name, ops_per_sec in results.items():
-        status = "✅ PASS" if ops_per_sec >= 30000 else "❌ FAIL"
-        print(f"{test_name.upper():<10}: {ops_per_sec:>8,.0f} ops/sec {status}")
+        status = "PASS" if ops_per_sec >= 30000 else "FAIL"
+        logging.info(f"{test_name.upper():<10}: {ops_per_sec:>8,.0f} ops/sec {status}")
 
     overall_avg = sum(results.values()) / len(results)
-    overall_status = "✅ PASS" if overall_avg >= 30000 else "❌ FAIL"
-    print(f"{'OVERALL':<10}: {overall_avg:>8,.0f} ops/sec {overall_status}")
+    overall_status = "PASS" if overall_avg >= 30000 else "FAIL"
+    logging.info(f"{'OVERALL':<10}: {overall_avg:>8,.0f} ops/sec {overall_status}")
 
     return results
 

@@ -4,11 +4,11 @@ A high-performance, thread-safe in-memory cache with TTL support and LRU evictio
 
 ## Features
 
-- ✅ **TTL Support** - Automatic expiration with configurable time-to-live
-- ✅ **LRU Eviction** - O(1) least-recently-used eviction when cache is full
-- ✅ **Thread-Safe** - Concurrent access from multiple threads
-- ✅ **Metrics Tracking** - Hit/miss rates, evictions, expirations
-- ✅ **High Performance** - 1M+ operations per second
+- **TTL Support** - Automatic expiration with configurable time-to-live
+- **LRU Eviction** - O(1) least-recently-used eviction when cache is full
+- **Thread-Safe** - Concurrent access from multiple threads
+- **Metrics Tracking** - Hit/miss rates, evictions, expirations
+- **High Performance** - 1M+ operations per second
 
 ## Quick Start
 
@@ -28,6 +28,30 @@ python main.py benchmark
 # Run everything
 python main.py all
 ```
+
+## Local Development Tools
+
+To make development easier and catch issues before pushing code, there are a couple recommendations:
+
+### Python Linting and Formatting (Ruff)
+
+Run these commands locally to check and fix your Python code:
+
+```bash
+# Check for linting issues
+ruff check .
+
+# Fix auto-fixable linting issues
+ruff check --fix .
+
+# Check code formatting
+ruff format --check .
+
+# Auto-format your code
+ruff format .
+```
+
+**Note:** Make sure to run `./runvelo` first to activate the virtual environment with Ruff installed.
 
 ## Usage
 

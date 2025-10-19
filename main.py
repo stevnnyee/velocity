@@ -58,7 +58,7 @@ def run_tests():
     import subprocess
 
     result = subprocess.run(
-        [sys.executable, "-m", "pytest", "tests/unit/test_cache_core.py", "-v"],
+        [sys.executable, "-m", "pytest", "tests/test_cache_core.py", "-v"],
         capture_output=True,
         text=True,
     )
